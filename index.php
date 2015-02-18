@@ -89,5 +89,24 @@ $app->put('/car/:id', function($id) use($app, $db){
     }
 });
 
+// Remove a car
+$app->delete('/car/:id', function($id) use($app, $db){
+    $app->response()->header("Content-Type", "application/json");
+    $car = $db->cars()->where('id', $id);
+    if($car->fetch()){
+        $result = $car->delete();
+        echo json_encode(array(
+            "status" => true,
+            "message" => "Car deleted successfully"
+        ));
+    }
+    else{
+        echo json_encode(array(
+            "status" => false,
+            "message" => "Car id $id does not exist"
+        ));
+    }
+});
+
 /* Run the application */
 $app->run();
