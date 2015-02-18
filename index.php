@@ -69,5 +69,25 @@ $app->post('/car', function() use($app, $db){
     echo json_encode(array('id' => $result['id']));
 });
 
+// Update a car
+$app->put('/car/:id', function($id) use($app, $db){
+    $app->response()->header("Content-Type", "application/json");
+    $car = $db->cars()->where("id", $id);
+    if ($car->fetch()) {
+        $post = $app->request()->put();
+        $result = $car->update($post);
+        echo json_encode(array(
+            "status" => (bool)$result,
+            "message" => "Car updated successfully"
+            ));
+    }
+    else{
+        echo json_encode(array(
+            "status" => false,
+            "message" => "Car id $id does not exist"
+        ));
+    }
+});
+
 /* Run the application */
 $app->run();
