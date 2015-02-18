@@ -24,5 +24,19 @@ $app->get('/', function(){
     echo 'Home - My Slim Application';
 });
 
+$app->get('/cars', function() use($app, $db){
+    $cars = array();
+    foreach ($db->cars() as $car) {
+        $cars[]  = array(
+            'id' => $car['id'],
+            'year' => $car['year'],
+            'make' => $car['make'],
+            'model' => $car['model']
+        );
+    }
+    $app->response()->header("Content-Type", "application/json");
+    echo json_encode($cars, JSON_FORCE_OBJECT);
+});
+
 /* Run the application */
 $app->run();
