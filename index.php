@@ -20,10 +20,13 @@ $pdo = new PDO($dsn, $dbuser, $dbpass);
 $db = new NotORM($pdo);
 
 /* Routes */
+
+// Home route
 $app->get('/', function(){
     echo 'Home - My Slim Application';
 });
 
+// Get all cars
 $app->get('/cars', function() use($app, $db){
     $cars = array();
     foreach ($db->cars() as $car) {
@@ -36,6 +39,26 @@ $app->get('/cars', function() use($app, $db){
     }
     $app->response()->header("Content-Type", "application/json");
     echo json_encode($cars, JSON_FORCE_OBJECT);
+});
+
+// Get a single car
+$app->get('/cars/:id', function($id) use ($app, $db) {
+    $app->response()->header("Content-Type", "application/json");
+    $car = $db->cars()->where('id', $id);
+    if($data = $car->fetch()){
+        echo json_encode(array(
+            'id' => $data['id'],
+            'year' => $data['year'],
+            'make' => $data['make'],
+            'model' => $data['model']
+        ));
+    }
+    else{
+        echo json_encode(array(
+            'status' => false,
+            'message' => "Car ID $id does not exist"
+        ));
+    }
 });
 
 /* Run the application */
