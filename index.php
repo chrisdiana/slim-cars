@@ -12,9 +12,17 @@ $app = new \Slim\Slim();
 $dbhost   = 'localhost';
 $dbuser   = 'root';
 $dbpass   = '';
-$dbname   = 'garages';
+$dbname   = 'garage';
 $dbmethod = 'mysql:dbname=';
 
 $dsn = $dbmethod.$dbname;
 $pdo = new PDO($dsn, $dbuser, $dbpass);
 $db = new NotORM($pdo);
+
+/* Routes */
+$app->get('/', function(){
+    echo 'Home - My Slim Application';
+});
+
+/* Run the application */
+$app->run();
