@@ -61,5 +61,13 @@ $app->get('/cars/:id', function($id) use ($app, $db) {
     }
 });
 
+// Add a new car
+$app->post('/car', function() use($app, $db){
+    $app->response()->header("Content-Type", "application/json");
+    $car = $app->request()->post();
+    $result = $db->cars->insert($car);
+    echo json_encode(array('id' => $result['id']));
+});
+
 /* Run the application */
 $app->run();
