@@ -1,7 +1,7 @@
 # Slim Demo - REST API
 
 This is an example application from the
-[Getting Started with Slim Framework: Creating a RESTful API](http://cdmedia.github.io/2015/01/27/getting-started-with-slim-framework/)
+[Getting Started with Slim Framework: Creating a RESTful API](http://codoki.github.io/2015/01/27/getting-started-with-slim-framework/)
 post. You can checkout each step by the staged commits.
 
 1. Clean install of Slim Framework (2688c54)
